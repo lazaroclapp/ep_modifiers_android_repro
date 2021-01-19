@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.0'
+    }
+}
+
+plugins {
+    id("net.ltgt.errorprone") version "1.2.1"
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'net.ltgt.errorprone'
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.example.hello"
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation "com.android.support:appcompat-v7:27.1.1"
+    implementation "com.google.errorprone:error_prone_annotations:2.5.1"
+    implementation files('my_tinyjavaxtools.jar')
+
+    testImplementation "junit:junit:4.12"
+
+    errorprone "com.google.errorprone:error_prone_core:2.5.1"
+    errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
+}
+
+import net.ltgt.gradle.errorprone.CheckSeverity
+
+tasks.withType(JavaCompile) {
+  if (!name.toLowerCase().contains("test")) {
+    options.errorprone {
+      check("Var", CheckSeverity.ERROR)
+    }
+  }
+}
