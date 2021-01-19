@@ -44,7 +44,6 @@ android {
 dependencies {
     implementation "com.android.support:appcompat-v7:27.1.1"
     implementation "com.google.errorprone:error_prone_annotations:2.5.1"
-    implementation files('my_tinyjavaxtools.jar')
 
     testImplementation "junit:junit:4.12"
 
