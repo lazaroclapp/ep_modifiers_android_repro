@@ -55,6 +55,7 @@ import net.ltgt.gradle.errorprone.CheckSeverity
 
 tasks.withType(JavaCompile) {
   if (!name.toLowerCase().contains("test")) {
+    options.compilerArgs.add("-Werror")
     options.errorprone {
       check("Var", CheckSeverity.ERROR)
     }
